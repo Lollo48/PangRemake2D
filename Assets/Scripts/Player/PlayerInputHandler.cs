@@ -1,15 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class InputManager : MonoBehaviour
+
+public class PlayerInputHandler : MonoBehaviour
 {
 
     PlayerControls m_playerControls;
+    PlayerShooting playerShooting;
     public Vector2 movementInput;
     public float verticalInput;
     public float horizontalInput;
+
+
+    private void Awake()
+    {
+        playerShooting = GetComponent<PlayerShooting>();
+    }
 
 
     private void OnEnable()
@@ -18,6 +25,7 @@ public class InputManager : MonoBehaviour
         {
             m_playerControls = new PlayerControls();
             m_playerControls.PlayerInput.Move.performed += i => movementInput = i.ReadValue<Vector2>();
+            m_playerControls.PlayerInput.Shoot.performed += playerShooting.Shooting;
         }
         m_playerControls.Enable();
     }
@@ -39,8 +47,9 @@ public class InputManager : MonoBehaviour
     {
         verticalInput = movementInput.y;
         horizontalInput = movementInput.x;
+
     }
 
-
+    
 
 }
