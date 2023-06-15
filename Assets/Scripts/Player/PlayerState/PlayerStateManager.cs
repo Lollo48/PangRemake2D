@@ -12,7 +12,7 @@ public class PlayerStateManager : StateManager<PlayerState>
     {
         PlayerTransform = playerTransform;
         PlayerRigidBody2D = playerRigidBody2D;
-        Debug.Log(PlayerRigidBody2D);
+        //Debug.Log(PlayerRigidBody2D);
     }
 
 
@@ -21,6 +21,7 @@ public class PlayerStateManager : StateManager<PlayerState>
     {
         ListOfStates.Add(PlayerState.Idle, new IdleState(PlayerState.Idle, this));
         ListOfStates.Add(PlayerState.Walk, new WalkState(PlayerState.Walk, this));
+        ListOfStates.Add(PlayerState.Shoot, new ShootState(PlayerState.Shoot, this));
     }
 
 

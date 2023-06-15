@@ -6,14 +6,16 @@ public class PlayerManager : MonoBehaviour
 {
     PlayerInputHandler inputManager;
     Rigidbody2D playerRigidBody;
+    Transform m_playerTransform;
     PlayerStateManager playerStateManager;
     public float movementSpeed;
-
+    
 
     private void Awake()
     {
         playerRigidBody = GetComponent<Rigidbody2D>();
-        playerStateManager = new PlayerStateManager(transform, playerRigidBody);
+        m_playerTransform = GetComponent<Transform>();
+        playerStateManager = new PlayerStateManager(m_playerTransform, playerRigidBody);
         playerStateManager.CurrentState = playerStateManager.ListOfStates[PlayerState.Idle];
         inputManager = GetComponent<PlayerInputHandler>();
 
@@ -30,9 +32,10 @@ public class PlayerManager : MonoBehaviour
 
     private void UpdateStates()
     {
-        if (inputManager.horizontalInput != 0) playerStateManager.ChangeState(PlayerState.Walk);
+        if (inputManager.horizontalInput != 0 && inputManager.isShooting == false) playerStateManager.ChangeState(PlayerState.Walk);
+        else if(inputManager.isShooting) playerStateManager.ChangeState(PlayerState.Shoot);
         else playerStateManager.ChangeState(PlayerState.Idle);
-
+        
     }
 
 

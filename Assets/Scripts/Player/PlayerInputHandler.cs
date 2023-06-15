@@ -7,16 +7,11 @@ public class PlayerInputHandler : MonoBehaviour
 {
 
     PlayerControls m_playerControls;
-    PlayerShooting playerShooting;
     public Vector2 movementInput;
     public float verticalInput;
     public float horizontalInput;
+    public bool isShooting;
 
-
-    private void Awake()
-    {
-        playerShooting = GetComponent<PlayerShooting>();
-    }
 
 
     private void OnEnable()
@@ -25,9 +20,13 @@ public class PlayerInputHandler : MonoBehaviour
         {
             m_playerControls = new PlayerControls();
             m_playerControls.PlayerInput.Move.performed += i => movementInput = i.ReadValue<Vector2>();
-            m_playerControls.PlayerInput.Shoot.performed += playerShooting.Shooting;
+            m_playerControls.PlayerInput.Shoot.performed += i => isShooting = i.ReadValueAsButton();
+            m_playerControls.PlayerInput.Shoot.canceled += i => isShooting = i.ReadValueAsButton();
+
         }
         m_playerControls.Enable();
+
+        
     }
 
 

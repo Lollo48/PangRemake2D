@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public Rigidbody2D bulletRigidBody2D;
-    [SerializeField] private float Bulletspeed;
-    Vector2 moveDirection;
+
+    [SerializeField] private float m_bulletspeed;
+    
 
 
 
@@ -17,13 +17,11 @@ public class Bullet : MonoBehaviour
 
     private void HandleMovement()
     {
-        moveDirection = Vector2.up * Bulletspeed;
-        moveDirection.Normalize();
-        moveDirection.x = 0;
-        moveDirection = moveDirection * Bulletspeed;
-        bulletRigidBody2D.velocity = moveDirection * Time.deltaTime;
+        transform.Translate(Vector3.up * m_bulletspeed * Time.deltaTime);
 
     }
+
+
 
 
 }

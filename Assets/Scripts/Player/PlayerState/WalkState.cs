@@ -65,4 +65,7 @@ public class WalkState : State<PlayerState>
         playerManager = GameManager.instance.playerManager;
     } 
 
+
+
+    
 }
