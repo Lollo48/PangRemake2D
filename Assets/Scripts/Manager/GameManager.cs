@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     public AnimationPlayerManager AnimationManager;
-    public PlayerInputHandler playerInput;
+    public PlayerInputHandler playerInputHandler;
     public PlayerManager playerManager;
 
 

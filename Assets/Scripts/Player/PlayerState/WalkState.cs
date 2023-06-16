@@ -5,7 +5,7 @@ using UnityEngine;
 public class WalkState : State<PlayerState>
 {
 
-    private PlayerStateManager playerStateManager;
+    PlayerStateManager m_playerStateManager;
     AnimationPlayerManager animationManager;
     PlayerInputHandler PlayerInputManager;
     PlayerManager playerManager;
@@ -14,19 +14,19 @@ public class WalkState : State<PlayerState>
 
     public WalkState(PlayerState playerState, StateManager<PlayerState> stateManager = null) : base(playerState, stateManager)
     {
-        playerStateManager = (PlayerStateManager)m_stateManager;
+        m_playerStateManager = (PlayerStateManager)m_stateManager;
         //Debug.Log(playerStateManager);
     }
 
     public override void OnEnter()
     {
         base.OnEnter();
-        GameManagerInstance();
         if (playerRigidBody2D == null)
         {
-            playerRigidBody2D = playerStateManager.PlayerRigidBody2D;
+            playerRigidBody2D = m_playerStateManager.PlayerRigidBody2D;
             //Debug.Log( playerRigidBody2D);
         }
+        GameManagerInstance();
     }
 
 
@@ -43,7 +43,7 @@ public class WalkState : State<PlayerState>
     {
         base.OnExit();
         animationManager.UpdateAnimatorValues(PlayerInputManager.horizontalInput,false);
-        playerStateManager.PlayerRigidBody2D.velocity = new Vector2(0, 0);
+        m_playerStateManager.PlayerRigidBody2D.velocity = new Vector2(0, 0);
     }
 
 
@@ -53,7 +53,8 @@ public class WalkState : State<PlayerState>
         moveDirection.Normalize();
         moveDirection.y = 0;
         moveDirection = moveDirection * playerManager.movementSpeed * Time.deltaTime;
-        playerStateManager.PlayerRigidBody2D.velocity = moveDirection;
+        m_playerStateManager.PlayerRigidBody2D.velocity = moveDirection;
+        
         
     }
 
@@ -61,7 +62,7 @@ public class WalkState : State<PlayerState>
     private void GameManagerInstance()
     {
         animationManager = GameManager.instance.AnimationManager;
-        PlayerInputManager = GameManager.instance.playerInput;
+        PlayerInputManager = GameManager.instance.playerInputHandler;
         playerManager = GameManager.instance.playerManager;
     } 
 

@@ -11,8 +11,12 @@ public class PlayerInputHandler : MonoBehaviour
     public float verticalInput;
     public float horizontalInput;
     public bool isShooting;
+    PlayerManager playerManager;
 
-
+    private void Awake()
+    {
+        playerManager = GetComponent<PlayerManager>();
+    }
 
     private void OnEnable()
     {
@@ -20,6 +24,7 @@ public class PlayerInputHandler : MonoBehaviour
         {
             m_playerControls = new PlayerControls();
             m_playerControls.PlayerInput.Move.performed += i => movementInput = i.ReadValue<Vector2>();
+            m_playerControls.PlayerInput.Move.canceled += i => movementInput = i.ReadValue<Vector2>();
             m_playerControls.PlayerInput.Shoot.performed += i => isShooting = i.ReadValueAsButton();
             m_playerControls.PlayerInput.Shoot.canceled += i => isShooting = i.ReadValueAsButton();
 

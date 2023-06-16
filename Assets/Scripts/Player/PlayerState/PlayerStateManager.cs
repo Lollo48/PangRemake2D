@@ -22,6 +22,8 @@ public class PlayerStateManager : StateManager<PlayerState>
         ListOfStates.Add(PlayerState.Idle, new IdleState(PlayerState.Idle, this));
         ListOfStates.Add(PlayerState.Walk, new WalkState(PlayerState.Walk, this));
         ListOfStates.Add(PlayerState.Shoot, new ShootState(PlayerState.Shoot, this));
+        //ListOfStates.Add(PlayerState.Ladder, new LadderState(PlayerState.Ladder, this));
+
     }
 
 
@@ -33,6 +35,7 @@ public enum PlayerState
 {
     Idle,
     Walk,
-    Shoot
+    Shoot,
+    Ladder
 
 }

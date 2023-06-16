@@ -52,7 +52,7 @@ public class ShootState : State<PlayerState>
     private void GameManagerInstance()
     {
         m_animationManager = GameManager.instance.AnimationManager;
-        m_playerInputManager = GameManager.instance.playerInput;
+        m_playerInputManager = GameManager.instance.playerInputHandler;
 
     }
 
