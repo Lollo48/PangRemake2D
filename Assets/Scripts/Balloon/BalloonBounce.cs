@@ -4,27 +4,26 @@ using UnityEngine;
 
 public class BalloonBounce : MonoBehaviour
 {
-
-	new Rigidbody2D rigidbody2D;
-    Vector3 lastVelocity;
     public float bounceHorizontalForce;
     public float bounceverticalForce;
     public float jumpHeight;
-
-    
+    public new Rigidbody2D rigidbody2D;
+    Vector3 lastVelocity;
+    BallManager ballManager;
 
     private void Awake()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         bounceHorizontalForce += 9.8f * 25f * Time.deltaTime;
         bounceverticalForce += 9.8f * 25f * Time.deltaTime;
-        rigidbody2D.AddForce(new Vector2(bounceverticalForce, bounceHorizontalForce));
+        ballManager = GameManager.instance.ballManager;
     }
 
     private void FixedUpdate()
     {
         lastVelocity = rigidbody2D.velocity;
     }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -39,11 +38,14 @@ public class BalloonBounce : MonoBehaviour
         {
             rigidbody2D.velocity = new Vector2(direction.x * Mathf.Max(speed, 0f), direction.y * Mathf.Max(speed, 0f));
         }
+        
 
     }
 
- 
+
+    public void Destroyer()
+    {
+        Destroy(gameObject);
+    }
+
 }
-
-
-

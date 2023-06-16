@@ -171,3 +171,4 @@ MonoBehaviour:
   bounceHorizontalForce: 200
   bounceverticalForce: 200
   jumpHeight: 500
+  rigidbody2D: {fileID: 7531226995095353694}

@@ -27,6 +27,7 @@ public class WalkState : State<PlayerState>
             //Debug.Log( playerRigidBody2D);
         }
         GameManagerInstance();
+        
     }
 
 
@@ -44,6 +45,7 @@ public class WalkState : State<PlayerState>
         base.OnExit();
         animationManager.UpdateAnimatorValues(PlayerInputManager.horizontalInput,false);
         m_playerStateManager.PlayerRigidBody2D.velocity = new Vector2(0, 0);
+        
     }
 
 

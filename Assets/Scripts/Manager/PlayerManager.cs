@@ -9,6 +9,8 @@ public class PlayerManager : MonoBehaviour
     Transform m_playerTransform;
     PlayerStateManager playerStateManager;
     public float movementSpeed;
+    public bool canShoot;
+    public float fireRate;
 
 
     private void Awake()
@@ -18,7 +20,7 @@ public class PlayerManager : MonoBehaviour
         playerStateManager = new PlayerStateManager(m_playerTransform, playerRigidBody);
         playerStateManager.CurrentState = playerStateManager.ListOfStates[PlayerState.Idle];
         inputHandler = GetComponent<PlayerInputHandler>();
-
+        canShoot = true;
 
     }
 
@@ -29,13 +31,25 @@ public class PlayerManager : MonoBehaviour
         inputHandler.HandleAllInputs();
         UpdateStates();
 
+
     }
     
+    public void InvokeCanShoot()
+    {
+        Invoke("SetCanShoot", fireRate);
+        
+    }
+
+    private void SetCanShoot()
+    {
+        canShoot = true;
+        
+    }
 
     private void UpdateStates()
     {
-        if (inputHandler.horizontalInput != 0 && inputHandler.isShooting == false) playerStateManager.ChangeState(PlayerState.Walk);
-        else if(inputHandler.isShooting) playerStateManager.ChangeState(PlayerState.Shoot);
+        if (inputHandler.horizontalInput != 0 && !inputHandler.isShooting && canShoot || !canShoot) playerStateManager.ChangeState(PlayerState.Walk);
+        else if(inputHandler.isShooting && canShoot) playerStateManager.ChangeState(PlayerState.Shoot);
         else playerStateManager.ChangeState(PlayerState.Idle);
         
     }
