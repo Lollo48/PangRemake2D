@@ -30,7 +30,7 @@ public class ShootState : State<PlayerState>
         }
         GameManagerInstance();
         m_animationManager.UpdateAnimatorShootingBool(true);
-        //m_playerInputManager.isShooting = false;
+        m_playerInputManager.isShooting = false;
         playerManager.canShoot = false;
     }
 
@@ -38,6 +38,7 @@ public class ShootState : State<PlayerState>
     public override void OnUpdate()
     {
         base.OnUpdate();
+
         playerWeapon.Shooting();
 
     }

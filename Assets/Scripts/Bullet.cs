@@ -7,18 +7,35 @@ public class Bullet : MonoBehaviour
 
     [SerializeField] private float m_bulletspeed;
     new Rigidbody2D rigidbody2D;
-    PlayerInputHandler playerInputHandler;
+    public LayerMask layerMask;
 
     private void Awake()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
-        playerInputHandler = GameManager.instance.playerInputHandler;
+
     }
 
+    private void Update()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down *10f, layerMask);
+        Debug.DrawRay(transform.position, Vector2.down * 10f, Color.red);
+        Debug.Log("hitt " + hit.collider.gameObject);
+
+        //if (hit.transform.TryGetComponent(out BalloonBounce balloonBounce))
+        //{
+        //    Debug.Log("raycast2d colpito il pallone");
+        //    balloonBounce.Destroyer();
+        //}
+
+   
+
+    }
     private void FixedUpdate()
     {
         HandleMovement();
-        Invoke("Destroyer", 4f);
+        Invoke("Destroyer", 3f);
+
+        
     }
 
     private void HandleMovement()
@@ -46,4 +63,7 @@ public class Bullet : MonoBehaviour
 
     }
 
+
+
+ 
 }

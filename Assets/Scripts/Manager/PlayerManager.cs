@@ -21,6 +21,7 @@ public class PlayerManager : MonoBehaviour
         playerStateManager.CurrentState = playerStateManager.ListOfStates[PlayerState.Idle];
         inputHandler = GetComponent<PlayerInputHandler>();
         canShoot = true;
+        
 
     }
 
@@ -48,9 +49,9 @@ public class PlayerManager : MonoBehaviour
 
     private void UpdateStates()
     {
-        if (inputHandler.horizontalInput != 0 && !inputHandler.isShooting && canShoot || !canShoot) playerStateManager.ChangeState(PlayerState.Walk);
-        else if(inputHandler.isShooting && canShoot) playerStateManager.ChangeState(PlayerState.Shoot);
-        else playerStateManager.ChangeState(PlayerState.Idle);
+        if (inputHandler.horizontalInput != 0 && !inputHandler.isShooting ) playerStateManager.ChangeState(PlayerState.Walk);
+        else if(inputHandler.isShooting && canShoot ) playerStateManager.ChangeState(PlayerState.Shoot);
+        else if (!inputHandler.isShooting) playerStateManager.ChangeState(PlayerState.Idle);
         
     }
 
