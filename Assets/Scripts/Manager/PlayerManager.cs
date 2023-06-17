@@ -6,18 +6,19 @@ public class PlayerManager : MonoBehaviour
 {
     PlayerInputHandler inputHandler;
     Rigidbody2D playerRigidBody;
-    Transform m_playerTransform;
+    Transform PlayerTransform;
     PlayerStateManager playerStateManager;
     public float movementSpeed;
     public bool canShoot;
     public float fireRate;
+    
 
 
     private void Awake()
     {
         playerRigidBody = GetComponent<Rigidbody2D>();
-        m_playerTransform = GetComponent<Transform>();
-        playerStateManager = new PlayerStateManager(m_playerTransform, playerRigidBody);
+        PlayerTransform = GetComponent<Transform>();
+        playerStateManager = new PlayerStateManager(PlayerTransform,playerRigidBody);
         playerStateManager.CurrentState = playerStateManager.ListOfStates[PlayerState.Idle];
         inputHandler = GetComponent<PlayerInputHandler>();
         canShoot = true;

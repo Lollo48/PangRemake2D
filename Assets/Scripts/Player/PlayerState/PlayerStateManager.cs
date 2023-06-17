@@ -10,6 +10,7 @@ public class PlayerStateManager : StateManager<PlayerState>
 
     public PlayerStateManager(Transform playerTransform, Rigidbody2D playerRigidBody2D, Dictionary<PlayerState, State<PlayerState>> listOfSTtes = null , State<PlayerState> currentState = null, State<PlayerState> nextState = null) : base(listOfSTtes,currentState,nextState)
     {
+
         PlayerTransform = playerTransform;
         PlayerRigidBody2D = playerRigidBody2D;
         //Debug.Log(PlayerRigidBody2D);

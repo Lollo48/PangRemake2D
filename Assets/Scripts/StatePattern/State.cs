@@ -15,6 +15,6 @@ public abstract class State<TKeyState>
     }
 
     public virtual void OnEnter() { /*Debug.Log("OnEnter " + nameOfState);*/ }
-    public virtual void OnUpdate() { Debug.Log("OnUpdate " + m_nameOfState); }
+    public virtual void OnUpdate() { /*Debug.Log("OnUpdate " + m_nameOfState);*/ }
     public virtual void OnExit() { /*Debug.Log("OnExit " + nameOfState);*/ }
 }

@@ -6,14 +6,13 @@ public class PlayerWeapon : MonoBehaviour
 {
 
     public GameObject bulletPrefabs;
-    private Vector3 offset = new Vector3(0, +1f,0f);
 
 
-
-
-    public void Shooting()
+    public void Shoot(bool isActive)
     {
-        GameObject bullet = Instantiate(bulletPrefabs, (transform.position + offset), Quaternion.identity);
-        
+        bulletPrefabs.gameObject.SetActive(isActive);
     }
+
+
+
 }

@@ -2,39 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : BulletBase
 {
 
     [SerializeField] private float m_bulletspeed;
     new Rigidbody2D rigidbody2D;
-    public LayerMask layerMask;
+    PlayerManager playerManager;
+    Vector3 offset = new Vector3(0f, +2f, 0f);
 
     private void Awake()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
-
+        playerManager = GameManager.instance.playerManager;
+        
     }
 
-    private void Update()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down *10f, layerMask);
-        Debug.DrawRay(transform.position, Vector2.down * 10f, Color.red);
-        Debug.Log("hitt " + hit.collider.gameObject);
-
-        //if (hit.transform.TryGetComponent(out BalloonBounce balloonBounce))
-        //{
-        //    Debug.Log("raycast2d colpito il pallone");
-        //    balloonBounce.Destroyer();
-        //}
-
-   
-
-    }
     private void FixedUpdate()
     {
         HandleMovement();
-        Invoke("Destroyer", 3f);
+    }
 
+    private void OnDisable()
+    {
+        transform.position = playerManager.transform.position - offset;
         
     }
 
@@ -48,22 +38,28 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.transform.TryGetComponent(out BalloonBounce balloonBounce))
+        if (collision.transform.TryGetComponent(out BalloonBounce balloonBounce))
         {
             Debug.Log("colpito");
+            playerManager.canShoot = true;
             balloonBounce.Destroyer();
-            Destroyer();
+            Disable(false);
         }
+
     }
 
-
-    private void Destroyer()
+    private void OnCollisionStay2D(Collision2D collision)
     {
-        Destroy(gameObject);
+        if (playerManager.canShoot) Disable(false);
+    }
+
+    private void Disable(bool isActive)
+    {
+        gameObject.SetActive(isActive);
 
     }
 
 
-
- 
 }
+
+

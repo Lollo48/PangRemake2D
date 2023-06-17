@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class ShootState : State<PlayerState>
 {
-
+    Transform PlayerTransform;
     PlayerStateManager m_playerStateManager;
     AnimationPlayerManager m_animationManager;
     PlayerInputHandler m_playerInputManager;
     PlayerManager playerManager;
-    Transform m_playerTransform;
     PlayerWeapon playerWeapon;
+
 
 
     public ShootState(PlayerState playerState, StateManager<PlayerState> stateManager = null) : base(playerState, stateManager)
@@ -22,13 +22,14 @@ public class ShootState : State<PlayerState>
     public override void OnEnter()
     {
         base.OnEnter();
-        if (m_playerTransform == null)
+        if (PlayerTransform == null)
         {
-            m_playerTransform = m_playerStateManager.PlayerTransform;
+            PlayerTransform = m_playerStateManager.PlayerTransform;
             playerWeapon = m_playerStateManager.PlayerTransform.GetComponent<PlayerWeapon>();
-            //Debug.Log( playerTransform);
+            //Debug.Log( playerRigidBody2D);
         }
         GameManagerInstance();
+        playerWeapon.Shoot(false);
         m_animationManager.UpdateAnimatorShootingBool(true);
         m_playerInputManager.isShooting = false;
         playerManager.canShoot = false;
@@ -38,9 +39,7 @@ public class ShootState : State<PlayerState>
     public override void OnUpdate()
     {
         base.OnUpdate();
-
-        playerWeapon.Shooting();
-
+        playerWeapon.Shoot(true);
     }
 
     public override void OnExit()
