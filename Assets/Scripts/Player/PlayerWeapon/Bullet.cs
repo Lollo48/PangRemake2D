@@ -45,7 +45,7 @@ public class Bullet : MonoBehaviour
             ballManager.lastPosition = balloonBounce.transform.position;
             balloonBounce.Destroyer();
             ballManager.destroyed = true;
-            ballManager.BreakBall();
+            ballManager.SplitBall();
             ballManager.destroyed = false;
 
         }
