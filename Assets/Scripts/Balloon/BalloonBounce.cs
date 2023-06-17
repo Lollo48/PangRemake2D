@@ -9,15 +9,17 @@ public class BalloonBounce : MonoBehaviour
     public float jumpHeight;
     public new Rigidbody2D rigidbody2D;
     Vector3 lastVelocity;
-    BallManager ballManager;
+ 
+    
 
     private void Awake()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         bounceHorizontalForce += 9.8f * 25f * Time.deltaTime;
         bounceverticalForce += 9.8f * 25f * Time.deltaTime;
-        ballManager = GameManager.instance.ballManager;
     }
+
+
 
     private void FixedUpdate()
     {
@@ -45,7 +47,12 @@ public class BalloonBounce : MonoBehaviour
 
     public void Destroyer()
     {
+
         Destroy(gameObject);
     }
+
+
+    
+
 
 }
