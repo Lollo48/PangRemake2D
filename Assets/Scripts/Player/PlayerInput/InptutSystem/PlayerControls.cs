@@ -39,7 +39,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Shoot"",
                     ""type"": ""Button"",
-                    ""id"": ""448e53f9-72b2-4f5b-822a-bfb204ffc33d"",
+                    ""id"": ""431bf29a-9ba4-44bf-81fe-0c4d83caae87"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -104,7 +104,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""67ab4218-37eb-443e-9684-3e1209450c58"",
+                    ""id"": ""6469f1ad-d1f6-4685-8008-64992e5d388c"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",

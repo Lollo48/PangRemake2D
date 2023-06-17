@@ -11,8 +11,8 @@ public class AnimationPlayerManager : MonoBehaviour
     private void Awake()
     {
         
-        animator = GetComponent<Animator>();
-        sprite = GetComponent<SpriteRenderer>();
+        animator = GetComponentInChildren<Animator>();
+        sprite = GetComponentInChildren<SpriteRenderer>();
         
     }
 
@@ -56,7 +56,8 @@ public class AnimationPlayerManager : MonoBehaviour
         
     }
 
-    
+
+
 
 
 }
