@@ -6,11 +6,11 @@ public class WalkState : State<PlayerState>
 {
 
     PlayerStateManager m_playerStateManager;
-    AnimationPlayerManager animationManager;
-    PlayerInputHandler PlayerInputManager;
-    PlayerManager playerManager;
-    Rigidbody2D playerRigidBody2D;
-    Vector2 moveDirection;
+    AnimationPlayerManager m_animationManager;
+    PlayerInputHandler m_playerInputManager;
+    PlayerManager m_playerManager;
+    Rigidbody2D m_playerRigidBody2D;
+    Vector2 m_moveDirection;
 
     public WalkState(PlayerState playerState, StateManager<PlayerState> stateManager = null) : base(playerState, stateManager)
     {
@@ -21,9 +21,9 @@ public class WalkState : State<PlayerState>
     public override void OnEnter()
     {
         base.OnEnter();
-        if (playerRigidBody2D == null)
+        if (m_playerRigidBody2D == null)
         {
-            playerRigidBody2D = m_playerStateManager.PlayerRigidBody2D;
+            m_playerRigidBody2D = m_playerStateManager.PlayerRigidBody2D;
             //Debug.Log( playerRigidBody2D);
         }
         GameManagerInstance();
@@ -36,14 +36,14 @@ public class WalkState : State<PlayerState>
         base.OnUpdate();
         //Debug.Log("velocity");
         PlayerMouvement();
-        animationManager.UpdateAnimatorValues(PlayerInputManager.horizontalInput,true);
+        m_animationManager.UpdateAnimatorValues(m_playerInputManager.HorizontalInput,true);
 
     }
 
     public override void OnExit()
     {
         base.OnExit();
-        animationManager.UpdateAnimatorValues(PlayerInputManager.horizontalInput,false);
+        m_animationManager.UpdateAnimatorValues(m_playerInputManager.HorizontalInput,false);
         m_playerStateManager.PlayerRigidBody2D.velocity = new Vector2(0, 0);
         
     }
@@ -51,11 +51,11 @@ public class WalkState : State<PlayerState>
 
     private void PlayerMouvement()
     {
-        moveDirection = Vector2.right * PlayerInputManager.horizontalInput;
-        moveDirection.Normalize();
-        moveDirection.y = 0;
-        moveDirection = moveDirection * playerManager.movementSpeed * Time.deltaTime;
-        m_playerStateManager.PlayerRigidBody2D.velocity = moveDirection;
+        m_moveDirection = Vector2.right * m_playerInputManager.HorizontalInput;
+        m_moveDirection.Normalize();
+        m_moveDirection.y = 0;
+        m_moveDirection = m_moveDirection * m_playerManager.MovementSpeed * Time.deltaTime;
+        m_playerStateManager.PlayerRigidBody2D.velocity = m_moveDirection;
         
         
     }
@@ -63,9 +63,9 @@ public class WalkState : State<PlayerState>
 
     private void GameManagerInstance()
     {
-        animationManager = GameManager.instance.AnimationManager;
-        PlayerInputManager = GameManager.instance.playerInputHandler;
-        playerManager = GameManager.instance.playerManager;
+        m_animationManager = GameManager.instance.AnimationManager;
+        m_playerInputManager = GameManager.instance.PlayerInputHandler;
+        m_playerManager = GameManager.instance.PlayerManager;
     } 
 
 

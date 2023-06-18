@@ -112,7 +112,7 @@ Transform:
   m_GameObject: {fileID: 7531226995095353667}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7531226994222355868}
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a753e012026af749b82e00c1d8ca9e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceHorizontalForce: 200
-  bounceverticalForce: 200
-  jumpHeight: 500
-  rigidbody2D: {fileID: 7531226995095353694}
+  BounceHorizontalForce: 350
+  BounceVerticalForce: 350
+  JumpHeight: 550
+  BallSize: 0

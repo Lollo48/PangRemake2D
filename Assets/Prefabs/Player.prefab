@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8676947424366814115}
   - component: {fileID: 8676947424366814127}
   - component: {fileID: 8676947424366814125}
+  - component: {fileID: 3072826294329697535}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -96,10 +97,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 822b1e63c307d8c49ae3fcfd28fb859b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementInput: {x: 0, y: 0}
-  verticalInput: 0
-  horizontalInput: 0
-  isShooting: 0
+  MovementInput: {x: 0, y: 0}
+  VerticalInput: 0
+  HorizontalInput: 0
+  IsShooting: 0
 --- !u!114 &8676947424366814127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,10 +113,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9def5e7cf0a0e484ba6b8d243751a458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 2000
-  canShoot: 0
-  fireRate: 3
-  bulletPrefabs: {fileID: 0}
+  MovementSpeed: 0
+  CanShoot: 0
+  m_fireRate: 0
+  Score: 0
 --- !u!114 &8676947424366814125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,6 +127,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 659627cf2aa142e469c62ffa19af0d59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3072826294329697535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8676947424366814134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d7b80d6dafaca4449df1315850ed4d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8676947425187569923
@@ -215,7 +228,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &8676947425187569920
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -232,4 +245,5 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

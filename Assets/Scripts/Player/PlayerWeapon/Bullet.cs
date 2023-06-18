@@ -2,67 +2,58 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : BulletBase
 {
 
     [SerializeField] private float m_bulletspeed;
-    new Rigidbody2D rigidbody2D;
-    Vector3 offset = new Vector3(0f, +2f, 0f);
-    PlayerManager playerManager;
-    BallManager ballManager;
+    Vector3 m_offset = new Vector3(0f, +2f, 0f);
+    PangEventManager m_eventManager;
 
-    private void Awake()
+
+    private void OnEnable()
     {
-        playerManager = GameManager.instance.playerManager;
-        ballManager = GameManager.instance.ballManager;
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        m_eventManager = GameManager.instance.PangEventManager;
     }
 
-    private void FixedUpdate()
+    protected override void WeaponPositionAfterDisable()
     {
-        HandleMovement();
+        base.WeaponPositionAfterDisable();
+        transform.position = m_playerManager.transform.position - m_offset;
     }
 
-    private void OnDisable()
-    {
-        transform.position = playerManager.transform.position - offset;
-        
-    }
-
-    private void HandleMovement()
+    protected override void HandleMovement()
     {
         Vector2 moveDirection = Vector2.up * m_bulletspeed * Time.deltaTime;
-        rigidbody2D.velocity = moveDirection;
+        m_rigidbody2D.velocity = moveDirection;
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+
+    protected override void CollisionEnter(Collision2D collision2D)
     {
-        if (collision.transform.TryGetComponent(out BalloonBounce balloonBounce))
+        base.CollisionEnter(collision2D);
+        if (collision2D.transform.TryGetComponent(out BalloonBounce balloonBounce))
         {
             Debug.Log("colpito");
-            Disable(false);
-            ballManager.lastPosition = balloonBounce.transform.position;
+            m_playerManager.Score += m_ballManager.BallScore;
+            m_eventManager.TriggerEvent(EventName.UpdateScore);
+            OnDisableGameObject(false);
+            m_ballManager.LastPosition = balloonBounce.transform.position;
+            m_ballManager.SetDestroyerBool(true);
+            m_ballManager.SplitBall(balloonBounce.BallSize);
+            m_ballManager.SetDestroyerBool(false);
             balloonBounce.Destroyer();
-            ballManager.destroyed = true;
-            ballManager.SplitBall();
-            ballManager.destroyed = false;
-
         }
 
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    protected override void CollisionStay(Collision2D collision2D)
     {
-        if (playerManager.canShoot) Disable(false);
+        base.CollisionStay(collision2D);
+        if (m_playerManager.CanShoot) OnDisableGameObject(false);
     }
 
-    private void Disable(bool isActive)
-    {
-        gameObject.SetActive(isActive);
-
-    }
-
+  
 
 }
 

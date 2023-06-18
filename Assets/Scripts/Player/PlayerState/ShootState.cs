@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ShootState : State<PlayerState>
 {
-    Transform PlayerTransform;
+    Transform m_playerTransform;
     PlayerStateManager m_playerStateManager;
     AnimationPlayerManager m_animationManager;
     PlayerInputHandler m_playerInputManager;
-    PlayerManager playerManager;
-    PlayerWeapon playerWeapon;
+    PlayerManager m_playerManager;
+    PlayerWeapon m_playerWeapon;
 
 
 
@@ -22,39 +22,39 @@ public class ShootState : State<PlayerState>
     public override void OnEnter()
     {
         base.OnEnter();
-        if (PlayerTransform == null)
+        if (m_playerTransform == null)
         {
-            PlayerTransform = m_playerStateManager.PlayerTransform;
-            playerWeapon = m_playerStateManager.PlayerTransform.GetComponent<PlayerWeapon>();
+            m_playerTransform = m_playerStateManager.PlayerTransform;
+            m_playerWeapon = m_playerStateManager.PlayerTransform.GetComponent<PlayerWeapon>();
             //Debug.Log( playerRigidBody2D);
         }
         GameManagerInstance();
-        playerWeapon.Shoot(false);
+        m_playerWeapon.Shoot(false);
         m_animationManager.UpdateAnimatorShootingBool(true);
-        m_playerInputManager.isShooting = false;
-        playerManager.canShoot = false;
+        m_playerInputManager.IsShooting = false;
+        m_playerManager.CanShoot = false;
     }
 
 
     public override void OnUpdate()
     {
         base.OnUpdate();
-        playerWeapon.Shoot(true);
+        m_playerWeapon.Shoot(true);
     }
 
     public override void OnExit()
     {
         base.OnExit();
         m_animationManager.UpdateAnimatorShootingBool(false);
-        playerManager.InvokeCanShoot();
+        m_playerManager.InvokeCanShoot();
     }
 
 
     private void GameManagerInstance()
     {
         m_animationManager = GameManager.instance.AnimationManager;
-        m_playerInputManager = GameManager.instance.playerInputHandler;
-        playerManager = GameManager.instance.playerManager;
+        m_playerInputManager = GameManager.instance.PlayerInputHandler;
+        m_playerManager = GameManager.instance.PlayerManager;
     }
 
 
