@@ -1969,6 +1969,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 2395337001146439044, guid: e0e0ab4bc88e86348b75648284280768, type: 3}
+      propertyPath: m_bulletspeed
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 3101646325995739955, guid: e0e0ab4bc88e86348b75648284280768, type: 3}
       propertyPath: m_Layer
       value: 9
