@@ -13,6 +13,7 @@ public class Bullet : BulletBase
     private void OnEnable()
     {
         m_eventManager = GameManager.instance.PangEventManager;
+        transform.rotation = Quaternion.identity;
     }
 
     protected override void WeaponPositionAfterDisable()
