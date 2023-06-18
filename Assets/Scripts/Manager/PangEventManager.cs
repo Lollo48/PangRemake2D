@@ -1,0 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PangEventManager : EventManagerBase<EventName>
+{
+    public EventName eventName;
+    
+
+
+}
+
+
+
+public enum EventName
+{
+    UpdateScore,
+    UpdatePlayerLife
+
+}

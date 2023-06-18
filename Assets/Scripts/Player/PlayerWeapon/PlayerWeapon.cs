@@ -5,12 +5,12 @@ using UnityEngine;
 public class PlayerWeapon : MonoBehaviour
 {
 
-    public GameObject bulletPrefabs;
+    public GameObject BulletPrefabs;
 
 
     public void Shoot(bool isActive)
     {
-        bulletPrefabs.gameObject.SetActive(isActive);
+        BulletPrefabs.gameObject.SetActive(isActive);
     }
 
 

@@ -4,105 +4,108 @@ using UnityEngine;
 
 public class BallManager : MonoBehaviour
 {
-    public BalloonBounce ballPrefab;
-    public Transform ballSpawner;
-    public bool destroyed ;
-    public Vector3 lastPosition;
-    public BallSize ballSize;
-
+    [SerializeField]
+    private BalloonBounce[] m_initialBallPrefabSpawn;
+    [SerializeField]
+    private BalloonBounce m_ballPrefab;
+    [SerializeField]
+    private Transform m_ballSpawner;
+    [HideInInspector]
+    public bool Destroyed;
+    [HideInInspector]
+    public Vector3 LastPosition;
+    public int BallScore;
 
     private void Awake()
     {
-        ballSize = BallSize.L;
-        destroyed = false;
-        BalloonBounce ball1 = Instantiate(ballPrefab, transform.position, Quaternion.identity);
-        SetRBForceDirection(ball1, -ball1.bounceverticalForce, ball1.bounceHorizontalForce);
+        StartCoroutine(InitialSpawn());
+    }
 
+
+
+    private IEnumerator InitialSpawn()
+    {
+        Destroyed = false;
+        for (int i = 0; i < m_initialBallPrefabSpawn.Length; i++)
+        {
+            if (m_initialBallPrefabSpawn.Length == 1)
+            {
+                BalloonBounce ball1 = InitialInstantiate(m_initialBallPrefabSpawn, m_ballSpawner, i);
+                SetRBForceDirection(ball1, -ball1.BounceVerticalForce, ball1.BounceHorizontalForce);
+                ball1.ChoseSize(ball1, ball1.BallSize);
+                //Debug.Log("initial ball size " + ball1.BallSize);
+            }
+            else
+            {
+                if (i % 2 == 0)
+                {
+                    BalloonBounce ball1 = InitialInstantiate(m_initialBallPrefabSpawn, m_ballSpawner, i);
+                    SetRBForceDirection(ball1, -ball1.BounceVerticalForce, ball1.BounceHorizontalForce);
+                    ball1.ChoseSize(ball1, ball1.BallSize);
+                }
+                else
+                {
+                    BalloonBounce ball1 = InitialInstantiate(m_initialBallPrefabSpawn, m_ballSpawner, i);
+                    SetRBForceDirection(ball1, ball1.BounceVerticalForce, ball1.BounceHorizontalForce);
+                    ball1.ChoseSize(ball1, ball1.BallSize);
+                }
+
+            }
+            yield return new WaitForSeconds(0.5f);
+
+        }
 
     }
 
-   
+    private BalloonBounce InitialInstantiate(BalloonBounce[] initialballPrefabSpawn, Transform position, int index)
+    {
+        BalloonBounce balloonBounce = Instantiate(initialballPrefabSpawn[index], position.position, Quaternion.identity);
 
+        return balloonBounce;
+    }
 
     private void SetRBForceDirection(BalloonBounce ball, float verticalForce, float horizontalForce)
     {
-        ball.rigidbody2D.AddForce(new Vector2(verticalForce, horizontalForce));
+        ball.GetComponent<Rigidbody2D>().AddForce(new Vector2(verticalForce, horizontalForce));
 
     }
 
 
-    public void BreakBall()
+    public void SplitBall(BallSize ballSize)
     {
-        if (destroyed)
+
+        if (Destroyed)
         {
+            if (ballSize == BallSize.XS) return;
 
-            BalloonBounce ball1 = Instantiate(ballPrefab, lastPosition, Quaternion.identity);
-            BalloonBounce ball2 = Instantiate(ballPrefab, lastPosition, Quaternion.identity);
+            BalloonBounce ball1 = Instantiate(m_ballPrefab, LastPosition, Quaternion.identity);
+            BalloonBounce ball2 = Instantiate(m_ballPrefab, LastPosition, Quaternion.identity);
 
-            ChoseSize(ball1,ball2);
+            ball1.BallSize = ballSize + 1;
+            ball2.BallSize = ballSize + 1;
+            ////Debug.Log("Ball 1 size " + ball1.BallSize);
+            ////Debug.Log("Ball 2 size " + ball2.BallSize);
 
-            SetRBForceDirection(ball1, ball1.bounceverticalForce, ball1.bounceHorizontalForce);
-            SetRBForceDirection(ball2, -ball2.bounceverticalForce, ball1.bounceHorizontalForce);
+            //ball1.ChoseSize(ball1, ballSize);
+            //ball2.ChoseSize(ball2, ballSize);
 
-        }
-            
-    }
+            SetRBForceDirection(ball1, ball1.BounceVerticalForce, ball1.BounceHorizontalForce);
+            SetRBForceDirection(ball2, -ball2.BounceVerticalForce, ball1.BounceHorizontalForce);
 
-
-    private void ChoseSize(BalloonBounce ball1,BalloonBounce ball2)
-    {
-        
-        switch (ballSize)
-        {
-            case BallSize.L :
-                {
-                    ball1.transform.localScale = new Vector3(4f, 4f, 4f);
-                    ball2.transform.localScale = new Vector3(4f, 4f, 4f);
-                    ballSize = BallSize.M;
-                    break;
-                }
-                
-            case BallSize.M :
-                {
-                    ball1.transform.localScale = new Vector3(3f, 3f, 3f);
-                    ball2.transform.localScale = new Vector3(3f, 3f, 3f);
-                    ballSize = BallSize.S;
-                    break;
-                }
-            case BallSize.S :
-                {
-                    ball1.transform.localScale = new Vector3(2f, 2f, 2f);
-                    ball2.transform.localScale = new Vector3(2f, 2f, 2f);
-                    ballSize = BallSize.XS;
-                    break;
-                } 
-            case BallSize.XS:
-                {
-                    ball1.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
-                    ball2.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
-                    ball1.Destroyer();
-                    ball2.Destroyer();
-                    break;
-                }
-            default:    
-                break;
         }
 
     }
 
 
 
-
-
+    public void SetDestroyerBool(bool canDestroy)
+    {
+        Destroyed = canDestroy;
+    }
 }
 
-public enum BallSize
-{
-    L,
-    M,
-    S,
-    XS
-}
+
+
 
 
 

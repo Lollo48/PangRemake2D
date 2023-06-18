@@ -7,26 +7,20 @@ public class PlayerInputHandler : MonoBehaviour
 {
 
     PlayerControls m_playerControls;
-    public Vector2 movementInput;
-    public float verticalInput;
-    public float horizontalInput;
-    public bool isShooting;
-    PlayerManager playerManager;
-
-    private void Awake()
-    {
-        playerManager = GetComponent<PlayerManager>();
-    }
+    public Vector2 MovementInput;
+    public float VerticalInput;
+    public float HorizontalInput;
+    public bool IsShooting;
 
     private void OnEnable()
     {
         if (m_playerControls == null)
         {
             m_playerControls = new PlayerControls();
-            m_playerControls.PlayerInput.Move.performed += i => movementInput = i.ReadValue<Vector2>();
-            m_playerControls.PlayerInput.Move.canceled += i => movementInput = i.ReadValue<Vector2>();
-            m_playerControls.PlayerInput.Shoot.performed += i => isShooting = i.ReadValueAsButton();
-            m_playerControls.PlayerInput.Shoot.canceled += i => isShooting = i.ReadValueAsButton();
+            m_playerControls.PlayerInput.Move.performed += i => MovementInput = i.ReadValue<Vector2>();
+            m_playerControls.PlayerInput.Move.canceled += i => MovementInput = i.ReadValue<Vector2>();
+            m_playerControls.PlayerInput.Shoot.performed += i => IsShooting = i.ReadValueAsButton();
+            m_playerControls.PlayerInput.Shoot.canceled += i => IsShooting = i.ReadValueAsButton();
 
         }
         m_playerControls.Enable();
@@ -49,8 +43,8 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void HandleMovementInput()
     {
-        verticalInput = movementInput.y;
-        horizontalInput = movementInput.x;
+        VerticalInput = MovementInput.y;
+        HorizontalInput = MovementInput.x;
 
     }
 

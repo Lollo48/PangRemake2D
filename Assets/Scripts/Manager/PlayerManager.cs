@@ -4,33 +4,37 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    PlayerInputHandler inputHandler;
-    Rigidbody2D playerRigidBody;
-    Transform PlayerTransform;
-    PlayerStateManager playerStateManager;
-    public float movementSpeed;
-    public bool canShoot;
-    public float fireRate;
-    
-
+    PlayerInputHandler m_inputHandler;
+    Rigidbody2D m_playerRigidBody;
+    Transform m_PlayerTransform;
+    PlayerStateManager m_playerStateManager;
+    public float MovementSpeed;
+    [HideInInspector]
+    public bool CanShoot;
+    [SerializeField]
+    private float m_fireRate;
+    [HideInInspector]
+    public int Score;
 
     private void Awake()
     {
-        playerRigidBody = GetComponent<Rigidbody2D>();
-        PlayerTransform = GetComponent<Transform>();
-        playerStateManager = new PlayerStateManager(PlayerTransform,playerRigidBody);
-        playerStateManager.CurrentState = playerStateManager.ListOfStates[PlayerState.Idle];
-        inputHandler = GetComponent<PlayerInputHandler>();
-        canShoot = true;
-        
+        m_playerRigidBody = GetComponent<Rigidbody2D>();
+        m_PlayerTransform = GetComponent<Transform>();
+        m_playerStateManager = new PlayerStateManager(m_PlayerTransform,m_playerRigidBody);
+        m_playerStateManager.CurrentState = m_playerStateManager.ListOfStates[PlayerState.Idle];
+        m_inputHandler = GetComponent<PlayerInputHandler>();
+        CanShoot = true;
+        Score = 0;
 
     }
 
 
+  
+
     private void Update()
     {
-        playerStateManager.CurrentState.OnUpdate();
-        inputHandler.HandleAllInputs();
+        m_playerStateManager.CurrentState.OnUpdate();
+        m_inputHandler.HandleAllInputs();
         UpdateStates();
 
 
@@ -38,21 +42,21 @@ public class PlayerManager : MonoBehaviour
     
     public void InvokeCanShoot()
     {
-        Invoke("SetCanShoot", fireRate);
+        Invoke("SetCanShoot", m_fireRate);
         
     }
 
     private void SetCanShoot()
     {
-        canShoot = true;
+        CanShoot = true;
         
     }
 
     private void UpdateStates()
     {
-        if (inputHandler.horizontalInput != 0 && !inputHandler.isShooting ) playerStateManager.ChangeState(PlayerState.Walk);
-        else if(inputHandler.isShooting && canShoot ) playerStateManager.ChangeState(PlayerState.Shoot);
-        else if (!inputHandler.isShooting) playerStateManager.ChangeState(PlayerState.Idle);
+        if (m_inputHandler.HorizontalInput != 0 && !m_inputHandler.IsShooting ) m_playerStateManager.ChangeState(PlayerState.Walk);
+        else if(m_inputHandler.IsShooting && CanShoot ) m_playerStateManager.ChangeState(PlayerState.Shoot);
+        else if (!m_inputHandler.IsShooting) m_playerStateManager.ChangeState(PlayerState.Idle);
         
     }
 
