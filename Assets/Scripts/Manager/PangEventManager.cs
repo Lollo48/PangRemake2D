@@ -17,7 +17,10 @@ public enum EventName
     ScoreEvent,
     HitPlayerEvent,
     ShootEvent,
-    DestroyBulletEvent
+    DestroyBulletEvent,
+    GameOver,
+    GamePause,
+    GameResume
     
 
 }

@@ -8,7 +8,7 @@ public class AudioSourceManager : MonoBehaviour
 
     public AudioSource audioSource;
     public AudioSource audioSourceDefaultSong;
-    public AudioClip hitPlayer, scoreEvent,shoot,destroyBullet;
+    public AudioClip hitPlayer, scoreEvent,shoot,destroyBullet,PlayerDeathAudio;
 
 
 
@@ -19,6 +19,7 @@ public class AudioSourceManager : MonoBehaviour
         eventManager.Registrer(EventName.ScoreEvent, HittedBallon);
         eventManager.Registrer(EventName.DestroyBulletEvent, DestroyBullet);
         eventManager.Registrer(EventName.ShootEvent, Shoot);
+        eventManager.Registrer(EventName.GameOver, PlayerDeath);
     }
 
     private void HittedPlayerAudio()
@@ -44,6 +45,13 @@ public class AudioSourceManager : MonoBehaviour
     {
         audioSource.clip = shoot;
         audioSource.Play();
+    }
+
+    private void PlayerDeath()
+    {
+        audioSource.clip = PlayerDeathAudio;
+        audioSource.Play();
+
     }
 
 

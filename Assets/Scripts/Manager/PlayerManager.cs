@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour
     Rigidbody2D m_playerRigidBody;
     Transform m_PlayerTransform;
     PlayerStateManager m_playerStateManager;
+    PangEventManager eventManager;
     public float MovementSpeed;
     [HideInInspector]
     public bool CanShoot;
@@ -23,6 +24,8 @@ public class PlayerManager : MonoBehaviour
         m_playerStateManager = new PlayerStateManager(m_PlayerTransform,m_playerRigidBody);
         m_playerStateManager.CurrentState = m_playerStateManager.ListOfStates[PlayerState.Idle];
         m_inputHandler = GetComponent<PlayerInputHandler>();
+        eventManager = GameManager.instance.PangEventManager;
+        eventManager.Registrer(EventName.GameOver, GameOver);
         CanShoot = true;
         Score = 0;
 
@@ -61,5 +64,9 @@ public class PlayerManager : MonoBehaviour
     }
 
 
+    private void GameOver()
+    {
+        Destroy(gameObject);
+    }
 
 }

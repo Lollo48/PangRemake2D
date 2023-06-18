@@ -84,8 +84,27 @@ public class BalloonBounce : BalloonBounceBase
     }
 
 
+    /// <summary>
+    /// bug fix
+    /// </summary>
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        BugFixAt3AM();
+    }
 
-
+    /// <summary>
+    /// some thimes realy realy unusual the ball velocity is 0 , i can't test because i can't reproduce the bug 
+    /// i hope this will fix that bug 
+    /// </summary>
+    private void BugFixAt3AM()
+    {
+        if (transform.position.y < -4)
+        {
+            Debug.Log("sono minore");
+            var speed = m_lastVelocity.magnitude;
+            m_rigidbody2D.velocity = new Vector2(m_rigidbody2D.velocity.x * Mathf.Max(speed, 0f), m_rigidbody2D.velocity.y * Mathf.Max(speed, 0f));
+        }
+    }
 
 }
 
