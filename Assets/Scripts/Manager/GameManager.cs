@@ -10,4 +10,9 @@ public class GameManager : Singleton<GameManager>
     public BallManager BallManager;
     public PangEventManager PangEventManager;
 
+
+
+
+
+
 }

@@ -6,15 +6,17 @@ public class AnimationPlayerManager : MonoBehaviour
 {
     Animator animator;
     SpriteRenderer sprite;
-    
+    PangEventManager eventManager;
 
     private void Awake()
     {
-        
         animator = GetComponentInChildren<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
-        
+        eventManager = GameManager.instance.PangEventManager;
+        eventManager.Registrer(EventName.HitPlayerEvent, UpdateHitAnimation);
+
     }
+
 
 
     public void UpdateAnimatorValues(float horizontalMovement,bool isWalking)
@@ -56,6 +58,14 @@ public class AnimationPlayerManager : MonoBehaviour
         
     }
 
+
+    public void UpdateHitAnimation()
+    {
+        animator.SetTrigger("isHit");
+
+    }
+
+ 
 
 
 

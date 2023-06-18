@@ -36,8 +36,9 @@ public class Bullet : BulletBase
         {
             Debug.Log("colpito");
             m_playerManager.Score += m_ballManager.BallScore;
-            m_eventManager.TriggerEvent(EventName.UpdateScore);
+            m_eventManager.TriggerEvent(EventName.ScoreEvent);
             OnDisableGameObject(false);
+            m_eventManager.TriggerEvent(EventName.DestroyBulletEvent);
             m_ballManager.LastPosition = balloonBounce.transform.position;
             m_ballManager.SetDestroyerBool(true);
             m_ballManager.SplitBall(balloonBounce.BallSize);
@@ -50,7 +51,11 @@ public class Bullet : BulletBase
     protected override void CollisionStay(Collision2D collision2D)
     {
         base.CollisionStay(collision2D);
-        if (m_playerManager.CanShoot) OnDisableGameObject(false);
+        if (m_playerManager.CanShoot)
+        {
+            OnDisableGameObject(false);
+            m_eventManager.TriggerEvent(EventName.DestroyBulletEvent);
+        }
     }
 
   

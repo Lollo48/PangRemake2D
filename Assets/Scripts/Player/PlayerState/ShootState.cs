@@ -6,11 +6,11 @@ public class ShootState : State<PlayerState>
 {
     Transform m_playerTransform;
     PlayerStateManager m_playerStateManager;
-    AnimationPlayerManager m_animationManager;
     PlayerInputHandler m_playerInputManager;
     PlayerManager m_playerManager;
     PlayerWeapon m_playerWeapon;
-
+    AnimationPlayerManager animationPlayer;
+    PangEventManager eventManager;
 
 
     public ShootState(PlayerState playerState, StateManager<PlayerState> stateManager = null) : base(playerState, stateManager)
@@ -29,8 +29,8 @@ public class ShootState : State<PlayerState>
             //Debug.Log( playerRigidBody2D);
         }
         GameManagerInstance();
-        m_playerWeapon.Shoot(false);
-        m_animationManager.UpdateAnimatorShootingBool(true);
+        eventManager.TriggerEvent(EventName.ShootEvent);
+        animationPlayer.UpdateAnimatorShootingBool(true);
         m_playerInputManager.IsShooting = false;
         m_playerManager.CanShoot = false;
     }
@@ -45,14 +45,15 @@ public class ShootState : State<PlayerState>
     public override void OnExit()
     {
         base.OnExit();
-        m_animationManager.UpdateAnimatorShootingBool(false);
         m_playerManager.InvokeCanShoot();
+        animationPlayer.UpdateAnimatorShootingBool(false);
     }
 
 
     private void GameManagerInstance()
     {
-        m_animationManager = GameManager.instance.AnimationManager;
+        eventManager = GameManager.instance.PangEventManager;
+        animationPlayer = GameManager.instance.AnimationManager;
         m_playerInputManager = GameManager.instance.PlayerInputHandler;
         m_playerManager = GameManager.instance.PlayerManager;
     }

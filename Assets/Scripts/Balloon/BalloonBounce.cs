@@ -8,7 +8,7 @@ public class BalloonBounce : BalloonBounceBase
     public float BounceVerticalForce;
     public float JumpHeight;
     Vector3 m_lastVelocity;
-
+    PangEventManager eventManager;
     public BallSize BallSize;
     BallManager ballManager;
     Vector3 offset = new Vector3(0, 3, 0);
@@ -17,6 +17,7 @@ public class BalloonBounce : BalloonBounceBase
     {
         base.Awake();
         ballManager = GameManager.instance.BallManager;
+        eventManager = GameManager.instance.PangEventManager;
         BounceHorizontalForce += 9.8f * 25f * Time.deltaTime;
         BounceVerticalForce += 9.8f * 25f * Time.deltaTime;
     }
@@ -55,6 +56,7 @@ public class BalloonBounce : BalloonBounceBase
             ballManager.SplitBall(BallSize);
             ballManager.SetDestroyerBool(false);
             Destroyer();
+            eventManager.TriggerEvent(EventName.HitPlayerEvent);
         }
     }
 

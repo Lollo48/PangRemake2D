@@ -14,7 +14,10 @@ public class PangEventManager : EventManagerBase<EventName>
 
 public enum EventName
 {
-    UpdateScore,
-    UpdatePlayerLife
+    ScoreEvent,
+    HitPlayerEvent,
+    ShootEvent,
+    DestroyBulletEvent
+    
 
 }
