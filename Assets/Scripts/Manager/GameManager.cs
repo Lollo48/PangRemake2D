@@ -23,6 +23,7 @@ public class GameManager : Singleton<GameManager>
     private void OnEnable()
     {
         if (Time.timeScale == 0) Resume();
+        else Time.timeScale = 1;
         CanGo = true;
     }
 

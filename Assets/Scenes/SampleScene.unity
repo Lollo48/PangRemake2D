@@ -5722,7 +5722,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8676947424366814127, guid: 88b56b3bf0d6b494a98e42f20132ea00, type: 3}
       propertyPath: MovementSpeed
-      value: 2500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 8676947424366814127, guid: 88b56b3bf0d6b494a98e42f20132ea00, type: 3}
       propertyPath: bulletPrefabs
