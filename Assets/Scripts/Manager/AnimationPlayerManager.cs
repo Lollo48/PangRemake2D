@@ -4,64 +4,74 @@ using UnityEngine;
 
 public class AnimationPlayerManager : MonoBehaviour
 {
-    Animator animator;
-    SpriteRenderer sprite;
-    PangEventManager eventManager;
+    Animator m_animator;
+    SpriteRenderer m_spriteRenderer;
+    PangEventManager m_eventManager;
 
     private void Awake()
     {
-        animator = GetComponentInChildren<Animator>();
-        sprite = GetComponentInChildren<SpriteRenderer>();
-        eventManager = GameManager.instance.PangEventManager;
-        eventManager.Registrer(EventName.HitPlayerEvent, UpdateHitAnimation);
+        m_animator = GetComponentInChildren<Animator>();
+        m_spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        m_eventManager = GameManager.instance.PangEventManager;
+        m_eventManager.Registrer(EventName.HitPlayerEvent, UpdateHitAnimation);
 
     }
 
 
-
+    /// <summary>
+    /// update walk animation 
+    /// i use this because i less time i take my old 3d function it works so 
+    /// </summary>
+    /// <param name="horizontalMovement"></param>
+    /// <param name="isWalking"></param>
     public void UpdateAnimatorValues(float horizontalMovement,bool isWalking)
     {
         #region SNAPPED HORIZONTAL
         if (horizontalMovement > 0 && horizontalMovement < 0.55f)
         {
-            sprite.flipX = false;
+            m_spriteRenderer.flipX = false;
 
         }
         else if (horizontalMovement > 0.55f)
         {
 
-            sprite.flipX = false;
+            m_spriteRenderer.flipX = false;
 
         }
         else if (horizontalMovement < 0 && horizontalMovement > -0.55f)
         {
 
-            sprite.flipX = true;
+            m_spriteRenderer.flipX = true;
 
         }
         else if (horizontalMovement < -0.55f)
         {
 
-            sprite.flipX = true;
+            m_spriteRenderer.flipX = true;
 
         }
 
         #endregion
-        animator.SetBool("IsWalk", isWalking);
+        m_animator.SetBool("IsWalk", isWalking);
 
     }
 
-
+    /// <summary>
+    /// update animator Shooting 
+    /// </summary>
+    /// <param name="isShooting"></param>
     public void UpdateAnimatorShootingBool(bool isShooting)
     {
-        animator.SetBool("isShooting", isShooting);
+        m_animator.SetBool("isShooting", isShooting);
         
     }
 
-
+    /// <summary>
+    /// update hit animator 
+    /// </summary>
     public void UpdateHitAnimation()
     {
-        animator.SetTrigger("isHit");
+        m_animator.SetTrigger("isHit");
 
     }
 

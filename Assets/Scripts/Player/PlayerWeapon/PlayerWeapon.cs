@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerWeapon : MonoBehaviour
+
+public class PlayerWeapon : WeaponBase
 {
-
-    public GameObject BulletPrefabs;
-
+    
 
 
-    public void Shoot(bool isActive)
+
+    public override void Shoot(bool isActive)
     {
-        BulletPrefabs.gameObject.SetActive(isActive);
+        m_bulletPrefabs.gameObject.SetActive(isActive);
     }
 
 
