@@ -1,7 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+
 
 public class GameManager : Singleton<GameManager>
 {
@@ -13,10 +14,16 @@ public class GameManager : Singleton<GameManager>
     public PlayerManager PlayerManager;
     public BallManager BallManager;
     public PangEventManager PangEventManager;
+    public UIManager UIManager;
+    public float Timer;// LAST MINUTE
+    [HideInInspector]
+    public bool CanGo;
+   
 
     private void OnEnable()
     {
         if (Time.timeScale == 0) Resume();
+        CanGo = true;
     }
 
     private void Start()
@@ -24,7 +31,13 @@ public class GameManager : Singleton<GameManager>
         PangEventManager.Registrer(EventName.GamePause, Pause);
         PangEventManager.Registrer(EventName.GameResume, Resume);
         PangEventManager.Registrer(EventName.GameOver, Pause);
-        
+        //LAST MINUTE
+        if (GameManager.instance.UIManager.Timer != null)
+        {
+            TimeSpan timeSpan = TimeSpan.FromSeconds(Timer);
+            GameManager.instance.UIManager.Timer.text = string.Format("{0:D2}:{1:D2}", timeSpan.Minutes, timeSpan.Seconds);
+        }
+
     }
 
     /// <summary>
@@ -38,6 +51,13 @@ public class GameManager : Singleton<GameManager>
             else PangEventManager.TriggerEvent(EventName.GamePause);
 
         }
+        //LAST MINUTE IT'S HORRIBLE I DON'T LIKE THE COMPARETAG
+        if (GameObject.FindGameObjectsWithTag("Ball").Length == 0)
+        {
+            PlayerManager.gameObject.SetActive(false);
+            PangEventManager.TriggerEvent(EventName.WinGame);
+        }
+        TimerFunction();
     }
 
     /// <summary>
@@ -68,5 +88,34 @@ public class GameManager : Singleton<GameManager>
 
     }
 
+
+
+    /// <summary>
+    /// Timer LAST MINUTE I DON'T LIKE IT
+    /// </summary>
+    private void TimerFunction()
+    {
+        if (CanGo)
+        {
+            if (Timer != Mathf.Infinity)
+            {
+                Timer -= Time.deltaTime;
+
+                if (Timer <= 0f)
+                {
+                    Timer = 0f;
+                    PangEventManager.TriggerEvent(EventName.GameOver);
+                }
+
+                if (GameManager.instance.UIManager.Timer != null)
+                {
+                    TimeSpan timeSpan = TimeSpan.FromSeconds(Timer);
+                    GameManager.instance.UIManager.Timer.text = string.Format("{0:D2}:{1:D2}", timeSpan.Minutes, timeSpan.Seconds);
+                }
+            }
+        }
+        
+
+    }
 
 }

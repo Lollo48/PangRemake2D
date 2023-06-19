@@ -25,7 +25,9 @@ public enum EventName
     DestroyBulletEvent,
     GameOver,
     GamePause,
-    GameResume
+    GameResume,
+    WinGame,
+    UpdateTimer
     
 
 }

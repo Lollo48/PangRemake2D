@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -9,22 +7,29 @@ public class UIManager : MonoBehaviour
     PangEventManager m_eventManager;
     PlayerManager m_playerManager;
     PlayerStats m_playerStats;
+    GameManager m_gameManager;
 
     [SerializeField]
     private TextMeshProUGUI m_scoreText;
     [SerializeField]
     private Image[] m_lifeImage;
     [SerializeField]
-    private TextMeshProUGUI m_pauseText;
+    private GameObject m_pauseText;
     [SerializeField]
     private Image m_gameOverImage;
-    
+    [SerializeField]
+    private GameObject m_winScene;
+    [SerializeField]
+    private TextMeshProUGUI m_finalScore;
+    public Text Timer = null; //LAST MINUTE 
 
-  
+
     private void Awake()
     {
+        m_winScene.SetActive(false);
         m_eventManager = GameManager.instance.PangEventManager;
         m_playerManager = GameManager.instance.PlayerManager;
+        m_gameManager = GameManager.instance;
         m_playerStats = m_playerManager.transform.GetComponent<PlayerStats>();
     }
 
@@ -39,6 +44,7 @@ public class UIManager : MonoBehaviour
         m_eventManager.Registrer(EventName.GamePause, GamePause);
         m_eventManager.Registrer(EventName.GameResume, ResumeGamePause);
         m_eventManager.Registrer(EventName.GameOver, GameOver);
+        m_eventManager.Registrer(EventName.WinGame, WinScene);
     }
 
     /// <summary>
@@ -91,6 +97,27 @@ public class UIManager : MonoBehaviour
         m_gameOverImage.gameObject.SetActive(true);
 
     }
+
+
+    private void WinScene()
+    {
+        m_gameManager.CanGo = false;
+        m_winScene.SetActive(true);
+
+        ///add timer last minute
+        // Count additional points for time and hp
+        int pointsForTime = (int)m_gameManager.Timer * 100;
+        int PointsLifeLeft = m_playerStats.Life;
+        PointsLifeLeft = m_playerStats.Life * 100;
+        m_finalScore.text =
+                    "Score: " + m_playerManager.Score.ToString() +
+                    "\nAdditional points for time: " + pointsForTime.ToString() +
+                    "\nAdditional points for HP: " + PointsLifeLeft.ToString() +
+                    "\nTotal score: " + (m_playerManager.Score + pointsForTime + PointsLifeLeft).ToString();
+
+    }
+
+   
 
 
 }

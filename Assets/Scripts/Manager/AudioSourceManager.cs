@@ -15,6 +15,8 @@ public class AudioSourceManager : MonoBehaviour
     [SerializeField]
     private AudioSource m_audioSourceDefaultSong;
     [SerializeField]
+    private AudioSource m_audioSourceWinSong;
+    [SerializeField]
     private AudioClip m_hitPlayer, m_score,m_shoot,m_destroyBullet,m_playerDeath;
 
 
@@ -27,8 +29,14 @@ public class AudioSourceManager : MonoBehaviour
         m_eventManager.Registrer(EventName.DestroyBulletEvent, DestroyBullet);
         m_eventManager.Registrer(EventName.ShootEvent, Shoot);
         m_eventManager.Registrer(EventName.GameOver, PlayerDeath);
+        m_eventManager.Registrer(EventName.WinGame, WinAudio);
     }
 
+    private void Start()
+    {
+        m_audioSourceDefaultSong.enabled = true;
+        m_audioSourceWinSong.enabled = false;
+    }
     /// <summary>
     /// hit player 
     /// </summary>
@@ -75,5 +83,14 @@ public class AudioSourceManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// WinAudio
+    /// </summary>
+    private void WinAudio()
+    {
+        m_audioSourceDefaultSong.enabled = false;
+        m_audioSourceWinSong.enabled = true;
+
+    }
 
 }
