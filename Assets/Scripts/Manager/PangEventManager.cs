@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PangEventManager : EventManagerBase<EventName>
 {
+    /// <summary>
+    /// PangEventManager 
+    /// </summary>
     public EventName eventName;
     
 
@@ -11,7 +14,9 @@ public class PangEventManager : EventManagerBase<EventName>
 }
 
 
-
+/// <summary>
+/// name for All Events
+/// </summary>
 public enum EventName
 {
     ScoreEvent,

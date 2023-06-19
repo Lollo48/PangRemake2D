@@ -18,6 +18,10 @@ public class WalkState : State<PlayerState>
         //Debug.Log(playerStateManager);
     }
 
+
+    /// <summary>
+    /// Take rigidBody2d to mouve the player
+    /// </summary>
     public override void OnEnter()
     {
         base.OnEnter();
@@ -30,7 +34,9 @@ public class WalkState : State<PlayerState>
         
     }
 
-
+    /// <summary>
+    /// mouve the player
+    /// </summary>
     public override void OnUpdate()
     {
         base.OnUpdate();
@@ -40,6 +46,10 @@ public class WalkState : State<PlayerState>
 
     }
 
+    /// <summary>
+    /// on exit set animator walk to false 
+    /// set the velocity to 0 because i want to stop the player every time i exit the state
+    /// </summary>
     public override void OnExit()
     {
         base.OnExit();
@@ -48,7 +58,10 @@ public class WalkState : State<PlayerState>
         
     }
 
-
+    /// <summary>
+    /// player mouvement function 
+    /// use rigidBody.velocity
+    /// </summary>
     private void PlayerMouvement()
     {
         m_moveDirection = Vector2.right * m_playerInputManager.HorizontalInput;
@@ -61,6 +74,9 @@ public class WalkState : State<PlayerState>
     }
 
 
+    /// <summary>
+    /// all the gameManager Instance
+    /// </summary>
     private void GameManagerInstance()
     {
         m_animationManager = GameManager.instance.AnimationManager;

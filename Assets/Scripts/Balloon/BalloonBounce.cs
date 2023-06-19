@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class BalloonBounce : BalloonBounceBase
 {
-    public float BounceHorizontalForce;
+
+    PangEventManager eventManager;
+    BallManager ballManager;
+
+
+    public float BounceHorizontalForce; 
     public float BounceVerticalForce;
     public float JumpHeight;
     Vector3 m_lastVelocity;
-    PangEventManager eventManager;
+    [HideInInspector]
     public BallSize BallSize;
-    BallManager ballManager;
-    Vector3 offset = new Vector3(0, 3, 0);
+    
+    Vector3 offset = new Vector3(0f, 3f, 0f);
+
 
     protected override void Awake()
     {
@@ -27,12 +33,20 @@ public class BalloonBounce : BalloonBounceBase
         ChoseSize(this, BallSize);
     }
 
+    /// <summary>
+    /// safe the last velocity to m_rigidbody2D.velocity
+    /// </summary>
     protected override void HandleMouvement()
     {
         base.HandleMouvement();
         m_lastVelocity = m_rigidbody2D.velocity;
     }
 
+
+    /// <summary>
+    /// detection for collision two different collision the ground collision and the right and left wall collision
+    /// </summary>
+    /// <param name="collision"></param>
     protected override void CollisionEnter(Collision2D collision)
     {
         base.CollisionEnter(collision);
@@ -61,6 +75,11 @@ public class BalloonBounce : BalloonBounceBase
     }
 
 
+    /// <summary>
+    /// function to decide the ball size spawn 
+    /// </summary>
+    /// <param name="ball1"></param>
+    /// <param name="ballSize"></param>
     public void ChoseSize(BalloonBounce ball1,BallSize ballSize)
     { 
         switch (ballSize)
@@ -108,6 +127,9 @@ public class BalloonBounce : BalloonBounceBase
 
 }
 
+/// <summary>
+/// all possible BallSize
+/// </summary>
 public enum BallSize
 {
     L,

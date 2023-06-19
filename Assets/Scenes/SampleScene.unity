@@ -1208,12 +1208,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_scoreText: {fileID: 654196248}
-  LifeImage:
+  m_lifeImage:
   - {fileID: 57750733}
   - {fileID: 22740322}
   - {fileID: 179865540}
-  pauseText: {fileID: 70106724}
-  gameOverImage: {fileID: 1895034155}
+  m_pauseText: {fileID: 70106724}
+  m_gameOverImage: {fileID: 1895034155}
 --- !u!1 &782208468
 GameObject:
   m_ObjectHideFlags: 0
@@ -2307,7 +2307,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1648227115}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.9, z: 0}
+  m_LocalPosition: {x: 0, y: 6.77, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2333,6 +2333,7 @@ MonoBehaviour:
   Destroyed: 0
   LastPosition: {x: 0, y: 0, z: 0}
   BallScore: 1000
+  TimeBeforeAnotherBallSpawn: 0.5
 --- !u!1 &1651507455
 GameObject:
   m_ObjectHideFlags: 0
@@ -2732,13 +2733,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07bf092cdcea3da469b15aa9c52eb649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 1824656576}
-  audioSourceDefaultSong: {fileID: 1824656577}
-  hitPlayer: {fileID: 8300000, guid: 6113a5a71757ecd4a89ccc329b42300f, type: 3}
-  scoreEvent: {fileID: 8300000, guid: a91c6838e62b82b40bfa7495ef7080f2, type: 3}
-  shoot: {fileID: 8300000, guid: af443736f34ba914e875b36ddb25b38e, type: 3}
-  destroyBullet: {fileID: 8300000, guid: 809e539c4456e814caae655061ae6457, type: 3}
-  PlayerDeathAudio: {fileID: 8300000, guid: eadc7ba08b82cf94db72756fc03a94b9, type: 3}
+  m_audioSource: {fileID: 1824656576}
+  m_audioSourceDefaultSong: {fileID: 1824656577}
+  m_hitPlayer: {fileID: 8300000, guid: 6113a5a71757ecd4a89ccc329b42300f, type: 3}
+  m_score: {fileID: 8300000, guid: a91c6838e62b82b40bfa7495ef7080f2, type: 3}
+  m_shoot: {fileID: 8300000, guid: af443736f34ba914e875b36ddb25b38e, type: 3}
+  m_destroyBullet: {fileID: 8300000, guid: 809e539c4456e814caae655061ae6457, type: 3}
+  m_playerDeath: {fileID: 8300000, guid: eadc7ba08b82cf94db72756fc03a94b9, type: 3}
 --- !u!82 &1824656576
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3681,7 +3682,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c1e382350da954d9308cd18a77c013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BulletPrefabs: {fileID: 2013174576}
+  m_bulletPrefabs: {fileID: 2013174576}
 --- !u!1 &1989304790
 GameObject:
   m_ObjectHideFlags: 0
@@ -4140,6 +4141,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3072826294329697535, guid: 88b56b3bf0d6b494a98e42f20132ea00, type: 3}
+      propertyPath: Life
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3072826294329697535, guid: 88b56b3bf0d6b494a98e42f20132ea00, type: 3}
       propertyPath: PlayerLife
       value: 3

@@ -5,6 +5,7 @@
 
 ///// <summary>
 ///// i don't know whether to keep this script here or put it all in the PlayerManager
+///i don't have much time to implement that fitures
 ///// </summary>
 //public class PlayerLadderAbility : MonoBehaviour
 //{

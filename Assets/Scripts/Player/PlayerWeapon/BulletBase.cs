@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+
 public abstract class BulletBase : MonoBehaviour
 {
-
     protected Rigidbody2D m_rigidbody2D;
     protected PlayerManager m_playerManager;
     protected BallManager m_ballManager;
@@ -17,7 +17,7 @@ public abstract class BulletBase : MonoBehaviour
         m_rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
-    protected virtual void FixedUpdate()
+    protected virtual void FixedUpdate() 
     {
         HandleMovement();
     }
@@ -28,31 +28,39 @@ public abstract class BulletBase : MonoBehaviour
         WeaponPositionAfterDisable();
     }
 
-    protected virtual void OnDisableGameObject(bool disable)
-    {
-        gameObject.SetActive(disable);
+    /// <summary>
+    /// i use the semi poolingSystem method 
+    /// i don't have much time to implment the pooling system for the bullet
+    /// </summary>
+    /// <param name="disable"></param>
+    protected virtual void OnDisableGameObject(bool disable) => gameObject.SetActive(disable);
 
-    }
 
+    /// <summary>
+    /// Every bullet i think mouves in different way so i make this function virtual to override it
+    /// </summary>
     protected virtual void HandleMovement() { }
 
 
-
+    /// <summary>
+    /// Collision function
+    /// </summary>
+    /// <param name="collision2D"></param>
     protected virtual void CollisionEnter(Collision2D collision2D) { } 
+    /// <summary>
+    /// CollisionStay function
+    /// </summary>
+    /// <param name="collision2D"></param>
     protected virtual void CollisionStay(Collision2D collision2D) { }
+
+    /// <summary>
+    /// ReSet the position after shoot
+    /// </summary>
     protected virtual void WeaponPositionAfterDisable() { }
 
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        CollisionEnter(collision);
-    }
+    private void OnCollisionEnter2D(Collision2D collision) => CollisionEnter(collision);
+    private void OnCollisionStay2D(Collision2D collision) => CollisionStay(collision);
 
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        CollisionStay(collision);
-    }
-
-   
 
 }

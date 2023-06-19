@@ -4,53 +4,74 @@ using UnityEngine;
 
 public class AudioSourceManager : MonoBehaviour
 {
-    PangEventManager eventManager;
 
-    public AudioSource audioSource;
-    public AudioSource audioSourceDefaultSong;
-    public AudioClip hitPlayer, scoreEvent,shoot,destroyBullet,PlayerDeathAudio;
+    /// <summary>
+    /// First time that i prove to implement audio source on a project so i don't know if this is the best practies 
+    /// </summary>
+    PangEventManager m_eventManager;
+
+    [SerializeField]
+    private AudioSource m_audioSource;
+    [SerializeField]
+    private AudioSource m_audioSourceDefaultSong;
+    [SerializeField]
+    private AudioClip m_hitPlayer, m_score,m_shoot,m_destroyBullet,m_playerDeath;
 
 
 
     private void Awake()
     {
-        eventManager = GameManager.instance.PangEventManager;
-        eventManager.Registrer(EventName.HitPlayerEvent, HittedPlayerAudio);
-        eventManager.Registrer(EventName.ScoreEvent, HittedBallon);
-        eventManager.Registrer(EventName.DestroyBulletEvent, DestroyBullet);
-        eventManager.Registrer(EventName.ShootEvent, Shoot);
-        eventManager.Registrer(EventName.GameOver, PlayerDeath);
+        m_eventManager = GameManager.instance.PangEventManager;
+        m_eventManager.Registrer(EventName.HitPlayerEvent, HittedPlayerAudio);
+        m_eventManager.Registrer(EventName.ScoreEvent, HitBalloon);
+        m_eventManager.Registrer(EventName.DestroyBulletEvent, DestroyBullet);
+        m_eventManager.Registrer(EventName.ShootEvent, Shoot);
+        m_eventManager.Registrer(EventName.GameOver, PlayerDeath);
     }
 
+    /// <summary>
+    /// hit player 
+    /// </summary>
     private void HittedPlayerAudio()
     {
-        audioSource.clip = hitPlayer;
-        audioSource.Play();
+        m_audioSource.clip = m_hitPlayer;
+        m_audioSource.Play();
     }
 
-    private void HittedBallon()
+    /// <summary>
+    /// hit balloon
+    /// </summary>
+    private void HitBalloon()
     {
-        audioSource.clip = scoreEvent;
-        audioSource.Play();
+        m_audioSource.clip = m_score;
+        m_audioSource.Play();
     }
 
+    /// <summary>
+    /// destroyBullet
+    /// </summary>
     private void DestroyBullet()
     {
-        audioSource.clip = destroyBullet;
-        audioSource.Play();
+        m_audioSource.clip = m_destroyBullet;
+        m_audioSource.Play();
     }
 
-
+    /// <summary>
+    /// shoot 
+    /// </summary>
     private void Shoot()
     {
-        audioSource.clip = shoot;
-        audioSource.Play();
+        m_audioSource.clip = m_shoot;
+        m_audioSource.Play();
     }
 
+    /// <summary>
+    /// Player die 
+    /// </summary>
     private void PlayerDeath()
     {
-        audioSource.clip = PlayerDeathAudio;
-        audioSource.Play();
+        m_audioSource.clip = m_playerDeath;
+        m_audioSource.Play();
 
     }
 

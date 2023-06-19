@@ -15,6 +15,8 @@ public class BallManager : MonoBehaviour
     [HideInInspector]
     public Vector3 LastPosition;
     public int BallScore;
+    public float TimeBeforeAnotherBallSpawn;
+
 
     private void Awake()
     {
@@ -22,7 +24,11 @@ public class BallManager : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// initial ball spawn 
+    /// use the coroutine to make a delay to make the game more unpredictable
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator InitialSpawn()
     {
         Destroyed = false;
@@ -51,12 +57,19 @@ public class BallManager : MonoBehaviour
                 }
 
             }
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(TimeBeforeAnotherBallSpawn);
 
         }
 
     }
 
+    /// <summary>
+    /// first Instantiate function
+    /// </summary>
+    /// <param name="initialballPrefabSpawn"></param>
+    /// <param name="position"></param>
+    /// <param name="index"></param>
+    /// <returns></returns>
     private BalloonBounce InitialInstantiate(BalloonBounce[] initialballPrefabSpawn, Transform position, int index)
     {
         BalloonBounce balloonBounce = Instantiate(initialballPrefabSpawn[index], position.position, Quaternion.identity);
@@ -64,6 +77,12 @@ public class BallManager : MonoBehaviour
         return balloonBounce;
     }
 
+    /// <summary>
+    /// set the first rigidbody velocity when ball spawn 
+    /// </summary>
+    /// <param name="ball"></param>
+    /// <param name="verticalForce"></param>
+    /// <param name="horizontalForce"></param>
     private void SetRBForceDirection(BalloonBounce ball, float verticalForce, float horizontalForce)
     {
         ball.GetComponent<Rigidbody2D>().AddForce(new Vector2(verticalForce, horizontalForce));
@@ -71,6 +90,11 @@ public class BallManager : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Instantiate the new ball after destroy the first one 
+    /// this function decide how much ball will spawn and the own size 
+    /// </summary>
+    /// <param name="ballSize"></param>
     public void SplitBall(BallSize ballSize)
     {
 
@@ -97,7 +121,10 @@ public class BallManager : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// Destroier function
+    /// </summary>
+    /// <param name="canDestroy"></param>
     public void SetDestroyerBool(bool canDestroy)
     {
         Destroyed = canDestroy;

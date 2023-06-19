@@ -12,12 +12,15 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI m_scoreText;
-    public Image[] LifeImage;
-    public TextMeshProUGUI pauseText;
-    public Image gameOverImage;
+    [SerializeField]
+    private Image[] m_lifeImage;
+    [SerializeField]
+    private TextMeshProUGUI m_pauseText;
+    [SerializeField]
+    private Image m_gameOverImage;
     
 
-
+  
     private void Awake()
     {
         m_eventManager = GameManager.instance.PangEventManager;
@@ -25,6 +28,10 @@ public class UIManager : MonoBehaviour
         m_playerStats = m_playerManager.transform.GetComponent<PlayerStats>();
     }
 
+
+    /// <summary>
+    /// register to all events
+    /// </summary>
     private void Start()
     {
         m_eventManager.Registrer(EventName.ScoreEvent, UpdateScore);
@@ -34,38 +41,54 @@ public class UIManager : MonoBehaviour
         m_eventManager.Registrer(EventName.GameOver, GameOver);
     }
 
+    /// <summary>
+    /// Update score with playerManager Score 
+    /// </summary>
     private void UpdateScore()
     {
         m_scoreText.text = m_playerManager.Score.ToString();
         
     }
 
+
+    /// <summary>
+    /// chose the right heart image to remove
+    /// </summary>
     private void HitPlayerUI()
     {
-        if (m_playerStats.PlayerLife == 2) LifeImage[0].enabled = false;
-        else if (m_playerStats.PlayerLife == 1) LifeImage[1].enabled = false;
+        if (m_playerStats.Life == 2) m_lifeImage[0].enabled = false;
+        else if (m_playerStats.Life == 1) m_lifeImage[1].enabled = false;
         else
         {
-            LifeImage[2].enabled = false;
+            m_lifeImage[2].enabled = false;
             m_eventManager.TriggerEvent(EventName.GameOver);
         }
     }
 
+
+    /// <summary>
+    /// gamePause
+    /// </summary>
     private void GamePause()
     {
-        pauseText.gameObject.SetActive(true);
+        m_pauseText.gameObject.SetActive(true);
 
     }
 
+    /// <summary>
+    /// resumeGame 
+    /// </summary>
     private void ResumeGamePause()
     {
-        pauseText.gameObject.SetActive(false);
+        m_pauseText.gameObject.SetActive(false);
     }
 
-
+    /// <summary>
+    /// gameOver
+    /// </summary>
     private void GameOver()
     {
-        gameOverImage.gameObject.SetActive(true);
+        m_gameOverImage.gameObject.SetActive(true);
 
     }
 

@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
+    /// <summary>
+    /// the reference for all for the Singleton<GameManager>
+    /// </summary>
     public AnimationPlayerManager AnimationManager;
     public PlayerInputHandler PlayerInputHandler;
     public PlayerManager PlayerManager;
@@ -24,6 +27,9 @@ public class GameManager : Singleton<GameManager>
         
     }
 
+    /// <summary>
+    /// i use the old inputsystem here because i don't have much time 
+    /// </summary>
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
@@ -33,19 +39,28 @@ public class GameManager : Singleton<GameManager>
 
         }
     }
+
+    /// <summary>
+    /// pause the game 
+    /// </summary>
     private void Pause()
 	{
 		Time.timeScale = 0;
 		
 	}
 
+    /// <summary>
+    /// resume the game 
+    /// </summary>
     private void Resume()
 	{
 		Time.timeScale = 1;
 		
 	}
 
-
+    /// <summary>
+    /// restart the game 
+    /// </summary>
     public void RestartGame()
     {
 
